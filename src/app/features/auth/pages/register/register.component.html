@@ -1,1 +1,83 @@
-<p>register works!</p>
+<div class="d-flex align-items-center justify-content-center min-vh-100 bg-light">
+	<div class="card shadow-sm login-card" style="max-width:900px; width:100%">
+		<div class="row g-0">
+			<div class="col-md-5 d-none d-md-block">
+				<img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=800&q=80" class="img-fluid h-100 rounded-start" alt="register image" style="object-fit: cover;" />
+			</div>
+
+			<div class="col-md-7">
+				<div class="card-body p-4 p-sm-5">
+					<!-- small-screen image shown above the form -->
+					<div class="d-block d-md-none mb-3">
+						<img src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=800&q=80" class="img-fluid rounded" alt="register image small" style="object-fit: cover; height:180px; width:100%;" />
+					</div>
+					<h3 class="card-title mb-3 text-center">Create account</h3>
+					<p class="text-muted text-center mb-4">Sign up to get access to the dashboard</p>
+
+								<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" novalidate>
+									<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+						<div class="mb-3">
+							<label for="fullName" class="form-label">Full name</label>
+							<input id="fullName" autofocus type="text" formControlName="fullName" class="form-control" [class.is-invalid]="f.fullName.touched && f.fullName.invalid" placeholder="Your full name" aria-describedby="fullNameHelp" />
+							<div id="fullNameHelp" class="field-help">
+								<!-- per-field feedback visible under the input when touched and invalid -->
+								<div *ngIf="f.fullName.touched && f.fullName.invalid" class="invalid-feedback d-block">
+									<div *ngIf="f.fullName.errors?.['required']">Full name is required.</div>
+									<div *ngIf="f.fullName.errors?.['minlength']">Full name must be at least 3 characters.</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="mb-3">
+							<label for="email" class="form-label">Email</label>
+							<input id="email" type="email" formControlName="email" class="form-control" [class.is-invalid]="f.email.touched && f.email.invalid" placeholder="you@example.com" aria-describedby="emailHelp" />
+							<div id="emailHelp" class="field-help">
+								<!-- per-field feedback visible under the input when touched and invalid -->
+								<div *ngIf="f.email.touched && f.email.invalid" class="invalid-feedback d-block">
+									<div *ngIf="f.email.errors?.['required']">Email is required.</div>
+									<div *ngIf="f.email.errors?.['email']">Please enter a valid email.</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="mb-3">
+							<label for="password" class="form-label">Password</label>
+							<input id="password" type="password" formControlName="password" class="form-control" [class.is-invalid]="(f.password.touched && f.password.invalid) || registerForm.errors?.['passwordMismatch']" placeholder="Choose a password" aria-describedby="passwordHelp" />
+							<div id="passwordHelp" class="field-help">
+								<!-- per-field feedback visible under the input when touched and invalid -->
+								<div *ngIf="f.password.touched && f.password.invalid" class="invalid-feedback d-block">
+									<div *ngIf="f.password.errors?.['required']">Password is required.</div>
+									<div *ngIf="f.password.errors?.['minlength']">Password must be at least 6 characters.</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="mb-3">
+							<label for="confirmPassword" class="form-label">Confirm password</label>
+							<input id="confirmPassword" type="password" formControlName="confirmPassword" class="form-control" [class.is-invalid]="(f.confirmPassword.touched && f.confirmPassword.invalid) || registerForm.errors?.['passwordMismatch']" placeholder="Repeat your password" aria-describedby="confirmPasswordHelp" />
+							<div id="confirmPasswordHelp" class="field-help">
+								<!-- per-field feedback visible under the input when touched and invalid -->
+								<div *ngIf="(f.confirmPassword.touched && f.confirmPassword.invalid) || registerForm.errors?.['passwordMismatch']" class="invalid-feedback d-block">
+									<div *ngIf="f.confirmPassword.errors?.['required']">Confirmation is required.</div>
+									<div *ngIf="registerForm.errors?.['passwordMismatch']">Passwords do not match.</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="mb-3 form-check">
+							<input id="agree" type="checkbox" class="form-check-input" formControlName="agree" />
+							<label for="agree" class="form-check-label">I agree to the Terms and Privacy</label>
+						</div>
+
+						<button type="submit" class="btn btn-success w-100" [disabled]="loading">{{ loading ? 'Creating...' : 'Create account' }}</button>
+					</form>
+
+					<div class="text-center mt-3">
+						<small class="text-muted">Already have an account? <a routerLink="/auth/login" class="text-decoration-none">Sign in</a></small>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
